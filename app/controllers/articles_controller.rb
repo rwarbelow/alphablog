@@ -5,8 +5,16 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.save
-    redirect_to articles_path(@article)
+    if @article.save
+      redirect_to article_path(@article)
+    else
+      flash[:notice] = "Article was not successfully created :("
+      render :new
+    end
+  end
+
+  def show
+    @article = Article.find(params[:id])
   end
 
   private
